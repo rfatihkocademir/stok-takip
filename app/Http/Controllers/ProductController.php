@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -26,12 +27,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = new Product();
-        $product->product_name = $request->product_name;
-        $product->price = $request->price;
-        $product->quantity = $request->quantity;
-        $product->save();
-        return response()->json('Ürün başarıyla Eklendi.');
+        try {
+            $product = new Product();
+            $product->product_name = $request->product_name;
+            $product->price = $request->price;
+            $product->quantity = $request->quantity;
+            $product->save();
+            return response()->json('Ürün başarıyla Eklendi.');
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**

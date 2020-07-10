@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Illuminate\Http\Request;
+use App\Product;
+use App\Siparis;
+use Exception;
 
-class HesaplaController extends Controller
+class SiparisController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,19 +16,23 @@ class HesaplaController extends Controller
      */
     public function index()
     {
-        $product = Product::all();
+        $product = Siparis::all();
         return response()->json($product);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        try {
+
+            $siparis = new Siparis();
+            $siparis->selected_items = $request->selected_items;
+            $siparis->total_price = $request->total_price;
+            $siparis->save();
+            return response()->json('Sipariş Kaydedildi!');
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
     /**
@@ -37,7 +43,8 @@ class HesaplaController extends Controller
      */
     public function show($id)
     {
-        //
+        $siparis = Siparis::find($id);
+        return response()->json($siparis);
     }
 
     /**
@@ -49,7 +56,6 @@ class HesaplaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
