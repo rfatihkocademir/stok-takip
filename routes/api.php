@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('product','ProductController');
+Route::apiResource('product', 'ProductController');
 
-Route::apiResource('hesapla','HesaplaController');
+Route::apiResource('siparisler', 'SiparisController');
